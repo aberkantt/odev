@@ -1,0 +1,4 @@
+# Windows betikleri CRLF, Mac/Linux betikleri LF satır sonu ile kalsın
+*.bat text eol=crlf
+*.sh  text eol=lf
+*.java text eol=lf
