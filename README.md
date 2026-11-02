@@ -10,7 +10,7 @@ Java 17 ile yazılmış bir konsol uygulamasıdır ve harici kütüphane kullanm
 ## Yol haritası
 
 - [x] Proje iskeleti, `Kisi` soyut sınıfı ve `Hasta`
-- [ ] Hizmet hiyerarşisi (muayene, görüntüleme, laboratuvar)
+- [x] Hizmet hiyerarşisi (muayene, görüntüleme, laboratuvar)
 - [ ] Kuruluş, şube, bölüm ve çalışma saatleri
 - [ ] Çalışanlar (doktor, sağlık personeli), yönetici ve uygunluk aralıkları
 - [ ] Randevu sınıfı ve onay mekanizması

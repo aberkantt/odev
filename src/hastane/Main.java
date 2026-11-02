@@ -1,30 +1,35 @@
 package hastane;
 
-import hastane.model.Hasta;
-import hastane.model.Kisi;
+import hastane.model.GoruntulemeHizmeti;
+import hastane.model.Hizmet;
+import hastane.model.LaboratuvarHizmeti;
+import hastane.model.MuayeneHizmeti;
 
-import java.time.LocalDate;
+import java.math.BigDecimal;
+import java.util.List;
 
-/** Geliştirme denemesi (1. gün): Kisi soyut sınıfı ve Hasta alt sınıfı. Menüler ilerleyen günlerde eklenecek. */
+/** Geliştirme denemesi (2. gün): Hizmet hiyerarşisi ve çok biçimlilik. */
 public class Main {
 
     public static void main(String[] args) {
         System.out.println("Hastane / Klinik Randevu Sistemi - geliştirme sürümü");
         System.out.println();
 
-        // Değişkenin tipi soyut Kisi, nesnenin kendisi Hasta
-        Kisi kisi = new Hasta("Ahmet", "Çelik", "0535 000 00 31", "ahmet.celik@hasta.test", "1234",
-                "10000000146", LocalDate.of(1990, 5, 14));
-        System.out.println("Oluşturulan kişi : " + kisi);
-        System.out.println("Rolü             : " + kisi.getRol().getGorunenAd());
-        System.out.println("Şifre 1234 doğru mu? " + kisi.sifreDogruMu("1234"));
-        System.out.println("Şifre 0000 doğru mu? " + kisi.sifreDogruMu("0000"));
+        List<Hizmet> hizmetler = List.of(
+                new MuayeneHizmeti("Genel Muayene", 20, new BigDecimal("750")),
+                new GoruntulemeHizmeti("Kontrastlı Beyin MR", 45, new BigDecimal("3500"), "MR", true),
+                new LaboratuvarHizmeti("Açlık Kan Şekeri", 10, new BigDecimal("200"), 8));
 
-        // Doğrulama: boş ad ile nesne oluşturulamaz
+        // Aynı metot çağrısı, nesnenin gerçek türüne göre farklı sonuç verir
+        for (Hizmet h : hizmetler) {
+            System.out.println(h);
+            System.out.println("   Hazırlık: " + h.getHazirlikBilgisi());
+        }
+
         try {
-            new Hasta(" ", "Deneme", "0500", "deneme@hasta.test", "1234", "10000000146", LocalDate.of(1990, 1, 1));
+            new MuayeneHizmeti("Hatalı", 20, new BigDecimal("-5"));
         } catch (IllegalArgumentException e) {
-            System.out.println("Beklenen hata     : " + e.getMessage());
+            System.out.println("Beklenen hata: " + e.getMessage());
         }
     }
 }
