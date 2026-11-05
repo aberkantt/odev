@@ -12,7 +12,7 @@ Java 17 ile yazılmış bir konsol uygulamasıdır ve harici kütüphane kullanm
 - [x] Proje iskeleti, `Kisi` soyut sınıfı ve `Hasta`
 - [x] Hizmet hiyerarşisi (muayene, görüntüleme, laboratuvar)
 - [x] Kuruluş, şube, bölüm ve çalışma saatleri
-- [ ] Çalışanlar (doktor, sağlık personeli), yönetici ve uygunluk aralıkları
+- [x] Çalışanlar (doktor, sağlık personeli), yönetici ve uygunluk aralıkları
 - [ ] Randevu sınıfı ve onay mekanizması
 - [ ] Çakışma kontrolü ve boş saat hesaplama
 - [ ] Bildirim sistemi (uygulama içi, e-posta, SMS)
