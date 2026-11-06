@@ -1,28 +1,23 @@
 package hastane;
 
-import hastane.model.Calisan;
+import hastane.istisna.HastaneException;
 import hastane.model.CalismaSaatleri;
 import hastane.model.Doktor;
+import hastane.model.Hasta;
 import hastane.model.Hizmet;
-import hastane.model.Kisi;
 import hastane.model.KurulusTuru;
 import hastane.model.MuayeneHizmeti;
-import hastane.model.SaatAraligi;
+import hastane.model.Randevu;
 import hastane.model.SaglikKurulusu;
-import hastane.model.SaglikPersoneli;
 import hastane.model.Sube;
-import hastane.model.UygunlukAraligi;
-import hastane.model.Yonetici;
 
 import java.math.BigDecimal;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.TemporalAdjusters;
-import java.util.List;
 
-/** Geliştirme denemesi (4. gün): Çalışanlar, yönetici ve uygunluk aralıkları. */
+/** Geliştirme denemesi (5. gün): Randevu nesnesi ve onay mekanizması. */
 public class Main {
 
     public static void main(String[] args) {
@@ -33,38 +28,27 @@ public class Main {
                 CalismaSaatleri.haftaIci(LocalTime.of(8, 0), LocalTime.of(18, 0)));
         Hizmet muayene = new MuayeneHizmeti("Genel Muayene", 20, new BigDecimal("750"));
         merkez.bolumEkle("Dahiliye").hizmetEkle(muayene);
-
-        Yonetici yonetici = new Yonetici("Mehmet", "Kaya", "0532", "mehmet.kaya@yildiz.test", "1234");
-        yonetici.kurulusYetkisiVer(hastane);
-
         Doktor ayse = new Doktor("Ayşe", "Yılmaz", "0533", "ayse.yilmaz@yildiz.test", "1234",
                 hastane, "Uzm. Dr.", "İç Hastalıkları");
-        ayse.hizmetEkle(muayene);
-        ayse.uygunlukEkle(new UygunlukAraligi(DayOfWeek.MONDAY,
-                new SaatAraligi(LocalTime.of(9, 0), LocalTime.of(12, 0)), merkez));
-
-        SaglikPersoneli elif = new SaglikPersoneli("Elif", "Şahin", "0534", "elif.sahin@yildiz.test", "1234",
-                hastane, "Radyoloji Teknisyeni");
-
-        // Tek listede farklı türler: her biri kendi getRol() sonucunu verir
-        List<Kisi> kisiler = List.of(yonetici, ayse, elif);
-        for (Kisi k : kisiler) {
-            System.out.println(k.getRol().getGorunenAd() + " -> " + k);
-        }
+        Hasta ahmet = new Hasta("Ahmet", "Çelik", "0535", "ahmet.celik@hasta.test", "1234",
+                "10000000146", LocalDate.of(1990, 5, 14));
 
         LocalDate pazartesi = LocalDate.now().with(TemporalAdjusters.next(DayOfWeek.MONDAY));
-        Calisan c = ayse;
-        System.out.println("Uygunluklar: " + c.getUygunluklar());
-        System.out.println("Pzt 10:00-10:20 müsait mi? "
-                + c.uygunMu(merkez, pazartesi.atTime(10, 0), pazartesi.atTime(10, 20)));
-        LocalDateTime ogleden = pazartesi.atTime(14, 0);
-        System.out.println("Pzt 14:00-14:20 müsait mi? " + c.uygunMu(merkez, ogleden, ogleden.plusMinutes(20)));
+        Randevu r = new Randevu(ahmet, ayse, muayene, merkez, pazartesi.atTime(9, 0));
+        System.out.println();
+        System.out.println(r.detay());
 
-        try {   // şube 18:00'de kapanıyor
-            ayse.uygunlukEkle(new UygunlukAraligi(DayOfWeek.TUESDAY,
-                    new SaatAraligi(LocalTime.of(17, 0), LocalTime.of(19, 0)), merkez));
-        } catch (IllegalArgumentException e) {
+        r.onayla();
+        System.out.println();
+        System.out.println("Onaylandıktan sonra: " + r.getDurum().getGorunenAd());
+
+        try {
+            r.onayla();   // ikinci kez onaylanamaz
+        } catch (HastaneException e) {
             System.out.println("Beklenen hata: " + e.getMessage());
         }
+
+        muayene.setUcret(new BigDecimal("900"));   // zam geldi
+        System.out.println("Hizmetin yeni ücreti: " + muayene.getUcret() + ", randevudaki ücret: " + r.getUcret());
     }
 }
