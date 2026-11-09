@@ -1,5 +1,6 @@
 package hastane.servis;
 
+import hastane.bildirim.BildirimServisi;
 import hastane.depo.VeriDeposu;
 import hastane.istisna.GecersizIslemException;
 import hastane.istisna.HastaneException;
@@ -39,9 +40,11 @@ public class RandevuServisi {
     public static final int ADIM_DAKIKA = 15;
 
     private final VeriDeposu depo;
+    private final BildirimServisi bildirimServisi;
 
-    public RandevuServisi(VeriDeposu depo) {
+    public RandevuServisi(VeriDeposu depo, BildirimServisi bildirimServisi) {
         this.depo = depo;
+        this.bildirimServisi = bildirimServisi;
     }
 
     // =====================================================================
@@ -55,6 +58,8 @@ public class RandevuServisi {
         }
         Randevu randevu = new Randevu(hasta, calisan, hizmet, sube, baslangic);
         depo.randevuEkle(randevu);
+        bildirimServisi.bildir(hasta, "Randevu talebiniz alındı, onay bekleniyor: " + kisaOzet(randevu));
+        bildirimServisi.bildir(calisan, "Onayınızı bekleyen yeni randevu: " + kisaOzet(randevu) + " - Hasta: " + hasta.getAdSoyad());
         return randevu;
     }
 
@@ -143,11 +148,13 @@ public class RandevuServisi {
     public void onayla(Kisi islemYapan, Randevu randevu) {
         onayYetkisiKontrol(islemYapan, randevu);
         randevu.onayla();
+        bildirimServisi.bildir(randevu.getHasta(), "Randevunuz ONAYLANDI: " + kisaOzet(randevu) + ". " + randevu.getHizmet().getHazirlikBilgisi());
     }
 
     public void reddet(Kisi islemYapan, Randevu randevu, String neden) {
         onayYetkisiKontrol(islemYapan, randevu);
         randevu.reddet(neden);
+        bildirimServisi.bildir(randevu.getHasta(), "Randevunuz REDDEDİLDİ: " + kisaOzet(randevu) + ". Neden: " + neden);
     }
 
     public void iptalEt(Kisi islemYapan, Randevu randevu, String neden) {
@@ -158,6 +165,13 @@ public class RandevuServisi {
             throw new YetkiException("Bu randevuyu iptal etme yetkiniz yok.");
         }
         randevu.iptalEt(neden);
+        String mesaj = "Randevu İPTAL edildi (" + islemYapan.getAdSoyad() + "): " + kisaOzet(randevu) + ". Neden: " + neden;
+        if (islemYapan != randevu.getHasta()) {
+            bildirimServisi.bildir(randevu.getHasta(), mesaj);
+        }
+        if (islemYapan != randevu.getCalisan()) {
+            bildirimServisi.bildir(randevu.getCalisan(), mesaj);
+        }
     }
 
     public void tamamla(Kisi islemYapan, Randevu randevu) {
@@ -207,5 +221,10 @@ public class RandevuServisi {
         }
         sonuc.sort(Comparator.comparing(Randevu::getBaslangic));
         return sonuc;
+    }
+
+    private static String kisaOzet(Randevu r) {
+        return "#" + r.getId() + " " + Bicim.tarihSaat(r.getBaslangic()) + " " + r.getHizmet().getAd()
+                + " (" + r.getCalisan() + ", " + r.getSube() + ")";
     }
 }

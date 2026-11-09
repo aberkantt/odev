@@ -15,7 +15,7 @@ Java 17 ile yazılmış bir konsol uygulamasıdır ve harici kütüphane kullanm
 - [x] Çalışanlar (doktor, sağlık personeli), yönetici ve uygunluk aralıkları
 - [x] Randevu sınıfı ve onay mekanizması
 - [x] Çakışma kontrolü ve boş saat hesaplama
-- [ ] Bildirim sistemi (uygulama içi, e-posta, SMS)
+- [x] Bildirim sistemi (uygulama içi, e-posta, SMS)
 - [ ] Yönetim servisleri, yetki kontrolü ve demo veriler
 - [ ] Rol bazlı konsol menüleri (hasta, çalışan, yönetici)
 - [ ] Testler ve dokümantasyon (UML diyagramları)
