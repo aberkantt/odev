@@ -16,7 +16,7 @@ Java 17 ile yazılmış bir konsol uygulamasıdır ve harici kütüphane kullanm
 - [x] Randevu sınıfı ve onay mekanizması
 - [x] Çakışma kontrolü ve boş saat hesaplama
 - [x] Bildirim sistemi (uygulama içi, e-posta, SMS)
-- [ ] Yönetim servisleri, yetki kontrolü ve demo veriler
+- [x] Yönetim servisleri, yetki kontrolü ve demo veriler
 - [ ] Rol bazlı konsol menüleri (hasta, çalışan, yönetici)
 - [ ] Testler ve dokümantasyon (UML diyagramları)
 
