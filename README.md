@@ -17,7 +17,7 @@ Java 17 ile yazılmış bir konsol uygulamasıdır ve harici kütüphane kullanm
 - [x] Çakışma kontrolü ve boş saat hesaplama
 - [x] Bildirim sistemi (uygulama içi, e-posta, SMS)
 - [x] Yönetim servisleri, yetki kontrolü ve demo veriler
-- [ ] Rol bazlı konsol menüleri (hasta, çalışan, yönetici)
+- [x] Rol bazlı konsol menüleri (hasta, çalışan, yönetici)
 - [ ] Testler ve dokümantasyon (UML diyagramları)
 
 ## Çalıştırma
