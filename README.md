@@ -3,13 +3,13 @@
 Nesneye Dayalı Programlama (NDP) dersi dönem projesi, **Seçenek A**.
 
 Tek şubeli klinikleri ve çok şubeli hastaneleri destekleyen, rol tabanlı bir randevu sistemi.
-Java 17 ile yazılmış bir konsol uygulamasıdır ve harici kütüphane kullanmaz.
+Java 21 ile yazılmış bir konsol uygulamasıdır ve harici kütüphane kullanmaz.
 
 | | |
 |---|---|
-| **Öğrenci** | _[Adınız Soyadınız]_ |
-| **Numara** | _[Öğrenci numaranız]_ |
-| **Dil / Sürüm** | Java 17+ (JDK) |
+| **Öğrenci** | _[Berkant ÖNTEMEL]_ |
+| **Numara** | _[Y255012117]_ |
+| **Dil / Sürüm** | Java 21 |
 
 ---
 
