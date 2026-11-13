@@ -7,8 +7,8 @@ Java 21 ile yazılmış bir konsol uygulamasıdır ve harici kütüphane kullanm
 
 | | |
 |---|---|
-| **Öğrenci** | _[Berkant ÖNTEMEL]_ |
-| **Numara** | _[Y255012117]_ |
+| **Öğrenci** | _Berkant ÖNTEMEL_ |
+| **Numara** | _Y255012117_ |
 | **Dil / Sürüm** | Java 21 |
 
 ---
